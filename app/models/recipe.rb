@@ -32,4 +32,6 @@ class Recipe < ApplicationRecord
 
   has_many :ingredients, dependent: :destroy
   accepts_nested_attributes_for :ingredients
+  paginates_per 50
+  max_paginates_per 100
 end

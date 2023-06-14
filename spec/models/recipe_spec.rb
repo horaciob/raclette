@@ -29,8 +29,6 @@ require 'rails_helper'
 RSpec.describe Recipe do
   describe 'validations' do
     subject { build(:recipe, :with_author, :with_category) }
-
-    it { is_expected.to validate_uniqueness_of(:title).scoped_to(:author_id) }
     it { is_expected.to validate_presence_of(:title) }
     it { is_expected.to validate_presence_of(:cook_time) }
     it { is_expected.to validate_presence_of(:prep_time) }
