@@ -41,7 +41,7 @@ end
 
 authors = {}
 categories = {}
-#thread_pool = Concurrent::ThreadPoolExecutor.new(max_threads: ActiveRecord::Base.connection_pool.size - 2)
+# thread_pool = Concurrent::ThreadPoolExecutor.new(max_threads: ActiveRecord::Base.connection_pool.size - 2)
 thread_pool = Concurrent::ThreadPoolExecutor.new(max_threads: 3)
 
 mutex_categories = Mutex.new
@@ -54,7 +54,7 @@ count = 0
 parsed_data.each do |recipe|
   thread_pool.post do
     count += 1
-    puts "checkpoint #{count}" if (count % 1000).zero?
+    Rails.logger.debug { "checkpoint #{count}" } if (count % 1000).zero?
     manage_uniq_creation_for(klass: Author, dictionary: authors, name: recipe['author'],
                              image: recipe['image'],
                              mutex: mutex_authors)
@@ -64,14 +64,13 @@ parsed_data.each do |recipe|
     params_ingredients = build_ingredients_params(recipe['ingredients'])
 
     record = create_recipe(recipe:, author_id: authors[recipe['author']],
-                  category_id: categories[recipe['category']],
-                  ingredients: params_ingredients)
+                           category_id: categories[recipe['category']],
+                           ingredients: params_ingredients)
     logger.error("could not save #{recipe}       #{record.errors.inspect}") unless record.persisted?
   end
 end
 
-
 thread_pool.shutdown
 thread_pool.wait_for_termination
 
-puts "Recipies on DB=#{Recipe.count} recipies on json #{parsed_data.count}"
+Rails.logger.debug { "Recipies on DB=#{Recipe.count} recipies on json #{parsed_data.count}" }

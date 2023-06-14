@@ -1,24 +1,27 @@
-source "https://rubygems.org"
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.0"
+ruby '3.2.0'
 
-gem "rails", "~> 7.0.5"
-gem "sprockets-rails"
 gem 'pg'
-gem "puma", "~> 6.0"
+gem 'puma', '~> 6.0'
+gem 'rails', '~> 7.0.5'
+gem 'sprockets-rails'
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 
-gem "importmap-rails"
+gem 'bootsnap', require: false
 gem 'dotenv-rails'
+gem 'importmap-rails'
+gem 'jbuilder'
 gem 'kaminari'
-gem "turbo-rails"
-gem "stimulus-rails"
-gem "tailwindcss-rails"
-gem "jbuilder"
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
-gem "bootsnap", require: false
+gem 'oj'
+gem 'stimulus-rails'
+gem 'tailwindcss-rails'
+gem 'turbo-rails'
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
