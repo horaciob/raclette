@@ -10,7 +10,7 @@ Bundler.require(*Rails.groups)
 
 module Raclette
   class Application < Rails::Application
-    Dotenv::Railtie.load if %w[development test].include? ENV['RAILS_ENV']
+    Dotenv::Railtie.load
 
     config.load_defaults 7.0
 

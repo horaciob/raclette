@@ -10,7 +10,7 @@ default: &default
   timeout: 5000
   username: <%=ENV['DB_USER']%>
   password: <%=ENV['DB_PASS']%>
-  host: localhost
+  host: <%= ENV.fetch('DB_HOST',"localhost")%>
 
 development:
   <<: *default
@@ -25,4 +25,4 @@ test:
 
 production:
   <<: *default
-  database: penny_prod
+  database: racletteprod
