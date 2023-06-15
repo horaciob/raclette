@@ -39,7 +39,6 @@ class Recipe < ApplicationRecord
     scope = Recipe.joins(:ingredients)
                   .group('recipes.id')
                   .having('COUNT(ingredients.id) <= ?', ingredients.size)
-                  .distinct
 
     ingredients.each do |ingredient|
       scope = scope.where(id: Ingredient.select(:recipe_id).where(name: ingredient))
