@@ -9,7 +9,7 @@
 #   Character.create(name: "Luke", movie: movies.first)
 DIR_SAMPLES = 'examples'
 FILE_NAME = 'recipes-en.json'
-logger = Logger.new('log/errors.log')
+logger = Logger.new('log/seed_errors.log')
 # Im going to assume that i can host this on memory to speedup seeds
 # I wanted to avoid to create many select to check if author or categories exists
 #

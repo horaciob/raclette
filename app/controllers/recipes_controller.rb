@@ -5,7 +5,10 @@ class RecipesController < ApplicationController
 
   # GET /recipes or /recipes.json
   def index
-    @recipes = Recipe.includes(:author, :category).page(params[:page]).per(10)
+    @recipes = Recipe.includes(:author, :category, :ingredients).page(params[:page])
+    return unless filter_params
+
+    @recipes.with_similar_ingredients(filter_params)
   end
 
   # GET /recipes/1 or /recipes/1.json
@@ -26,10 +29,8 @@ class RecipesController < ApplicationController
     respond_to do |format|
       if @recipe.save
         format.html { redirect_to recipe_url(@recipe), notice: 'Recipe was successfully created.' }
-        format.json { render :show, status: :created, location: @recipe }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @recipe.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -67,5 +68,9 @@ class RecipesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def recipe_params
     params.require(:recipe).permit(:title, :cook_time, :prep_time, :rating, :author_id, :category_id)
+  end
+
+  def filter_params
+    params.require(:filters).permit(ingredients: [])
   end
 end

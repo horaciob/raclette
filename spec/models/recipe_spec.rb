@@ -29,6 +29,7 @@ require 'rails_helper'
 RSpec.describe Recipe do
   describe 'validations' do
     subject { build(:recipe, :with_author, :with_category) }
+
     it { is_expected.to validate_presence_of(:title) }
     it { is_expected.to validate_presence_of(:cook_time) }
     it { is_expected.to validate_presence_of(:prep_time) }
@@ -46,6 +47,40 @@ RSpec.describe Recipe do
     it 'ratings is default to 0.0' do
       recipe.save
       expect(recipe.reload.ratings).to eq 0.0
+    end
+  end
+
+  describe 'when filter by ingredients' do
+    subject { described_class.by_ingredients(ingredients) }
+
+    let_it_be(:recipe1) { create(:recipe, :with_ingredients, ingredient_names: %w[onion garlic]) }
+    let_it_be(:recipe2) { create(:recipe, :with_ingredients, ingredient_names: %w[onion garlic tomato]) }
+    let_it_be(:recipe3) { create(:recipe, :with_ingredients, ingredient_names: %w[onion garlic tomato oil]) }
+
+    describe '.by_ingredients' do
+      context 'when it doesnt have enought ingredients' do
+        let(:ingredients) { ['onion'] }
+
+        it 'returns empty array' do
+          expect(subject).to eq []
+        end
+      end
+
+      context 'when it has exactly those ingredients' do
+        let(:ingredients) { %w[onion garlic tomato] }
+
+        it 'returns empty array' do
+          expect(subject).to eq [recipe2]
+        end
+      end
+
+      context 'when recipe has less than those ingredients' do
+        let(:ingredients) { %w[onion garlic tomato oil potatos] }
+
+        it 'returns empty array', pending: 'need to come back here' do
+          expect(subject).to eq %i[recipe1 recipe2 recipe3]
+        end
+      end
     end
   end
 end

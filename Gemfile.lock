@@ -262,6 +262,7 @@ GEM
       railties (>= 6.0.0)
     tailwindcss-rails (2.0.29-x86_64-darwin)
       railties (>= 6.0.0)
+    test-prof (1.2.1)
     thor (1.2.2)
     timeout (0.3.2)
     turbo-rails (1.4.0)
@@ -310,6 +311,7 @@ DEPENDENCIES
   sprockets-rails
   stimulus-rails
   tailwindcss-rails
+  test-prof (~> 1.0)
   turbo-rails
   tzinfo-data
   web-console

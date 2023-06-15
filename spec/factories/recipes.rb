@@ -32,6 +32,18 @@ FactoryBot.define do
     author { nil }
     category { nil }
 
+    trait :with_ingredients do
+      transient do
+        ingredient_names { [] }
+      end
+
+      after(:create) do |recipe, evaluator|
+        evaluator.ingredient_names.each do |ingredient_name|
+          create(:ingredient, name: ingredient_name, recipe_id: recipe.id)
+        end
+      end
+    end
+
     trait :with_author do
       author
     end

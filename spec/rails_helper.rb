@@ -5,6 +5,7 @@ require 'spec_helper'
 require 'factory_bot'
 require 'n_plus_one_control/rspec'
 require 'database_cleaner/active_record'
+require 'test_prof/recipes/rspec/let_it_be'
 
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'

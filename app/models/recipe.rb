@@ -32,6 +32,18 @@ class Recipe < ApplicationRecord
 
   has_many :ingredients, dependent: :destroy
   accepts_nested_attributes_for :ingredients
-  paginates_per 50
-  max_paginates_per 100
+  paginates_per 20
+  max_paginates_per 50
+
+  def self.by_ingredients(ingredients)
+    scope = Recipe.joins(:ingredients)
+                  .group('recipes.id')
+                  .having('COUNT(ingredients.id) <= ?', ingredients.size)
+                  .distinct
+
+    ingredients.each do |ingredient|
+      scope = scope.where(id: Ingredient.select(:recipe_id).where(name: ingredient))
+    end
+    scope
+  end
 end
