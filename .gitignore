@@ -30,3 +30,4 @@
 
 .bundle/
 coverage/*
+spec/examples.txt
