@@ -88,6 +88,8 @@ GEM
       reline (>= 0.3.1)
     diff-lcs (1.5.0)
     docile (1.4.0)
+    dockerfile-rails (1.4.2)
+      rails
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
@@ -151,6 +153,8 @@ GEM
       net-protocol
     nio4r (2.5.9)
     nokogiri (1.15.2-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.15.2-x86_64-linux)
       racc (~> 1.4)
     oj (3.15.0)
     parallel (1.23.0)
@@ -266,6 +270,8 @@ GEM
       railties (>= 6.0.0)
     tailwindcss-rails (2.0.29-x86_64-darwin)
       railties (>= 6.0.0)
+    tailwindcss-rails (2.0.29-x86_64-linux)
+      railties (>= 6.0.0)
     test-prof (1.2.1)
     thor (1.2.2)
     timeout (0.3.2)
@@ -288,6 +294,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-22
+  x86_64-linux
 
 DEPENDENCIES
   annotate
@@ -295,6 +302,7 @@ DEPENDENCIES
   database_cleaner-active_record
   database_consistency
   debug
+  dockerfile-rails (>= 1.4)
   dotenv-rails
   factory_bot_rails
   faker

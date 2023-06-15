@@ -45,3 +45,5 @@ group :test do
   gem 'shoulda'
   gem 'simplecov'
 end
+
+gem "dockerfile-rails", ">= 1.4", :group => :development
