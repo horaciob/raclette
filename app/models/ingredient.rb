@@ -21,6 +21,7 @@
 #
 class Ingredient < ApplicationRecord
   validates :name, presence: true
+  validates :name, presence: true, uniqueness: { scope: :recipe_id }
 
   belongs_to :recipe
 end

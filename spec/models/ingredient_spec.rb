@@ -24,6 +24,12 @@ require 'rails_helper'
 RSpec.describe Ingredient do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:name) }
+
+    context 'when there is another record' do
+      subject { create(:ingredient, recipe: build(:recipe)) }
+
+      it { is_expected.to validate_uniqueness_of(:name).scoped_to(:recipe_id) }
+    end
   end
 
   describe 'relations' do

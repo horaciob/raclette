@@ -40,6 +40,7 @@ group :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'n_plus_one_control'
+  gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 6.0.0'
   gem 'shoulda'
   gem 'simplecov'

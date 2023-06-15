@@ -4,6 +4,6 @@ class CreateIndexes < ActiveRecord::Migration[7.0]
   def change
     add_index :categories, :name, unique: true
     add_index :authors, :name, unique: true
-    add_index :ingredients, :name
+    add_index :ingredients, %i[name recipe_id], unique: true
   end
 end

@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_142240) do
     t.bigint "recipe_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_ingredients_on_name"
+    t.index ["name", "recipe_id"], name: "index_ingredients_on_name_and_recipe_id", unique: true
     t.index ["recipe_id"], name: "index_ingredients_on_recipe_id"
   end
 
