@@ -27,7 +27,8 @@ class RecipesController < ApplicationController
 
   def filter_params
     return [] unless params[:filters]
-
-    params.require(:filters).permit(ingredients: [])
+    params.require(:filters).permit(ingredients: []).transform_values do |values|
+      values.map(&:strip)
+    end
   end
 end
