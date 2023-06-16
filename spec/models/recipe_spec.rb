@@ -69,16 +69,20 @@ RSpec.describe Recipe do
       context 'when it has exactly those ingredients' do
         let(:ingredients) { %w[onion garlic tomato] }
 
-        it 'returns empty array' do
-          expect(subject).to eq [recipe2]
+        it 'returns an array that include exact matching' do
+          expect(subject).to include(recipe2)
+        end
+
+        it 'returns an array that include non exacting matching' do
+          expect(subject).to include(recipe1)
         end
       end
 
-      context 'when recipe has less than those ingredients' do
-        let(:ingredients) { %w[onion garlic tomato oil potatos] }
+      context 'when user has all ingredients' do
+        let(:ingredients) { %w[onion garlic tomato oil potatos sugar pepper] }
 
-        it 'returns empty array', pending: 'need to come back here' do
-          expect(subject).to eq %i[recipe1 recipe2 recipe3]
+        it 'returns array' do
+          expect(subject).to eq [recipe1, recipe2, recipe3]
         end
       end
     end

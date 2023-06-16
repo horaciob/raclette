@@ -36,13 +36,15 @@ class Recipe < ApplicationRecord
   max_paginates_per 50
 
   def self.by_ingredients(ingredients)
-    scope = Recipe.joins(:ingredients)
+    # SELECT recipes.title, ARRAY_AGG(ingredients.name)
+    # FROM recipes
+    # JOIN ingredients ON ingredients.recipe_id = recipes.id
+    # GROUP BY recipes.title HAVING ARRAY_AGG(ingredients.name)::text[] <@ ARRAY['2 slices white bread', '2 slices American cheese']::text[]
+    
+    scope = Recipe.select("recipes.*, ARRAY_AGG(ingredients.name)")
+                  .joins(:ingredients)
                   .group('recipes.id')
-                  .having('COUNT(ingredients.id) <= ?', ingredients.size)
-
-    ingredients.each do |ingredient|
-      scope = scope.where(id: Ingredient.select(:recipe_id).where(name: ingredient))
-    end
-    scope
+                  .having('ARRAY_AGG(ingredients.name)::text[] <@ ARRAY [?]::text[]', 
+                  ingredients)
   end
 end
