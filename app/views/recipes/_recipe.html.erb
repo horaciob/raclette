@@ -18,7 +18,7 @@
     <ul class="list-disc mx-10">
       <%recipe.ingredients.each do |ingredient|%>
         <li>
-          <%=ingredient.name%> 
+          <%=ingredient.name%>
           <%if ingredient.amount || ingredient.amount_type %>
             <span class="text-gray-400 leading-none">
             (<%=ingredient.amount%> <%=ingredient.amount_type%>)
