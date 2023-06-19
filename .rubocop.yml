@@ -7,6 +7,8 @@ AllCops:
 
 Style/Documentation:
   Enabled: false
+Metrics/MethodLength:
+  Max: 12
 RSpec/NestedGroups:
   Enabled: false
 RSpec/NamedSubject:

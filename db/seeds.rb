@@ -35,11 +35,13 @@ def create_recipe(recipe:, author_id:, category_id:, ingredients:)
 end
 
 def build_ingredients_params(ingredients)
-  type_of_amounts = %w[tablespoon tablespoons pound cups cup pinch large medium small clove can cans bottle bottles packages
-                       package slices slice ripe ripes Granny tablespoons tablespoon teaspoon teaspoons ounces ounce]
-
-  regex = %r{^(?<amount>[\d\u00BC-\u00BE\u2150-\u215E]+)?(?:\s+(?<amount_type>(?:(?:#{Regexp.union(type_of_amounts)})s?))?\s)?+(?<ingredient>.*)$}
-
+  type_of_amounts = %w[tablespoon tablespoons pound cups cup pinch large medium
+                       small clove can cans bottle bottles packages
+                       package slices slice ripe ripes Granny tablespoons
+                       tablespoon teaspoon teaspoons ounces ounce]
+  # rubocop:disable Layout/LineLength
+  regex = /^(?<amount>([\d\s\u00BC-\u00BE\u2150-\u215E]+)\s+)?(?:(?<amount_type>(?:(?:#{Regexp.union(type_of_amounts)})s?))?\s)?+(?<ingredient>.*)$/
+  # rubocop:enable Layout/LineLength
   ingredients.map do |line|
     line_with_no_parenthesis = line.gsub(/\([^)]*\)/, '')
     result = line_with_no_parenthesis.match(regex)
