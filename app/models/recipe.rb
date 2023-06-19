@@ -39,12 +39,13 @@ class Recipe < ApplicationRecord
     # SELECT recipes.title, ARRAY_AGG(ingredients.name)
     # FROM recipes
     # JOIN ingredients ON ingredients.recipe_id = recipes.id
-    # GROUP BY recipes.title HAVING ARRAY_AGG(ingredients.name)::text[] <@ ARRAY['2 slices white bread', '2 slices American cheese']::text[]
-    
-    scope = Recipe.select("recipes.*, ARRAY_AGG(ingredients.name)")
-                  .joins(:ingredients)
-                  .group('recipes.id')
-                  .having('ARRAY_AGG(ingredients.name)::text[] <@ ARRAY [?]::text[]', 
+    # GROUP BY recipes.title HAVING ARRAY_AGG(ingredients.name)::text[] <@
+    # ARRAY['2 slices white bread', '2 slices American cheese']::text[]
+
+    Recipe.select('recipes.*, ARRAY_AGG(ingredients.name)')
+          .joins(:ingredients)
+          .group('recipes.id')
+          .having('ARRAY_AGG(ingredients.name)::text[] <@ ARRAY [?]::text[]',
                   ingredients)
   end
 end

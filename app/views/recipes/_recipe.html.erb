@@ -18,7 +18,7 @@
     <ul class="list-disc mx-10">
       <%recipe.ingredients.each do |ingredient|%>
         <li>
-          <%=ingredient.name%>
+          <%=ingredient.name%> (<%=ingredient.amount%> <%=ingredient.amount_type%>)
         </li>
       <%end%>
     </ul>

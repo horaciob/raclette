@@ -13,7 +13,6 @@ logger = Logger.new('log/seed_errors.log')
 # Im going to assume that i can host this on memory to speedup seeds
 # I wanted to avoid to create many select to check if author or categories exists
 #
-
 def manage_uniq_creation_for(klass:, dictionary:, name:, mutex:, image: nil)
   return if name.blank? || dictionary[name]
 
@@ -36,12 +35,24 @@ def create_recipe(recipe:, author_id:, category_id:, ingredients:)
 end
 
 def build_ingredients_params(ingredients)
-  ingredients.map { |name| { name: } }
+  type_of_amounts = %w[tablespoon tablespoons pound cups cup pinch large medium small clove can cans bottle bottles packages
+                       package slices slice ripe ripes Granny tablespoons tablespoon teaspoon teaspoons ounces ounce]
+
+  regex = %r{^(?<amount>[\d\u00BC-\u00BE\u2150-\u215E]+)?(?:\s+(?<amount_type>(?:(?:#{Regexp.union(type_of_amounts)})s?))?\s)?+(?<ingredient>.*)$}
+
+  ingredients.map do |line|
+    line_with_no_parenthesis = line.gsub(/\([^)]*\)/, '')
+    result = line_with_no_parenthesis.match(regex)
+
+    { amount: result[:amount], amount_type: result[:amount_type],
+      name: result[:ingredient].strip, source: line }
+  end
 end
 
 authors = {}
 categories = {}
-# thread_pool = Concurrent::ThreadPoolExecutor.new(max_threads: ActiveRecord::Base.connection_pool.size - 2)
+
+thread_pool = Concurrent::ThreadPoolExecutor.new(max_threads: ActiveRecord::Base.connection_pool.size - 2)
 thread_pool = Concurrent::ThreadPoolExecutor.new(max_threads: 3)
 
 mutex_categories = Mutex.new
