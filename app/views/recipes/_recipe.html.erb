@@ -19,8 +19,10 @@
       <%recipe.ingredients.each do |ingredient|%>
         <li>
           <%=ingredient.name%> 
-          <span class="text-gray-400 leading-none">
-          (<%=ingredient.amount%> <%=ingredient.amount_type%>)
+          <%if ingredient.amount || ingredient.amount_type %>
+            <span class="text-gray-400 leading-none">
+            (<%=ingredient.amount%> <%=ingredient.amount_type%>)
+          <%end%>
           </span>
         </li>
       <%end%>
